@@ -32,9 +32,9 @@ class WDiscriminator(nn.Module):
         for i in range(opt.num_layer-2):
             N = int(opt.nfc/pow(2,(i+1)))
             block = ConvBlock(max(2*N,opt.min_nfc),max(N,opt.min_nfc),opt.ker_size,opt.padd_size,1)
-            attn = AxialAttention(dim=max(N,opt.min_nfc), dim_index=1, dim_heads=8, heads=1, num_dimensions=2, sum_axial_out = True)
+            #attn = AxialAttention(dim=max(N,opt.min_nfc), dim_index=1, dim_heads=8, heads=1, num_dimensions=2, sum_axial_out = True)
             self.body.add_module('block%d'%(i+1),block)
-            self.body.add_module('attn%d'%(i+1),attn)
+            #self.body.add_module('attn%d'%(i+1),attn)
         self.tail = nn.Conv2d(max(N,opt.min_nfc),1,kernel_size=opt.ker_size,stride=1,padding=opt.padd_size)
 
     def forward(self,x):
