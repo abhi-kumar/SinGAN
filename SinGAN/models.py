@@ -35,7 +35,7 @@ class WDiscriminator(nn.Module):
             self.body.add_module('block%d'%(i+1),block)
             
             if( i+1 == 3):
-                attn = AxialAttention(dim=max(N,opt.min_nfc), dim_index=1, dim_heads=32, heads=1, num_dimensions=2, sum_axial_out = True)
+                attn = AxialAttention(dim=max(N,opt.min_nfc), dim_index=1, heads=2, num_dimensions=2, sum_axial_out = True)
                 self.body.add_module('attn%d'%(i+1),attn)
         self.tail = nn.Conv2d(max(N,opt.min_nfc),1,kernel_size=opt.ker_size,stride=1,padding=opt.padd_size)
 
@@ -58,7 +58,7 @@ class GeneratorConcatSkip2CleanAdd(nn.Module):
             block = ConvBlock(max(2*N,opt.min_nfc),max(N,opt.min_nfc),opt.ker_size,opt.padd_size,1)
             self.body.add_module('block%d'%(i+1),block)
             if( i+1 == 3):
-                attn = AxialAttention(dim=max(N,opt.min_nfc), dim_index=1, dim_heads=32, heads=1, num_dimensions=2, sum_axial_out = True)
+                attn = AxialAttention(dim=max(N,opt.min_nfc), dim_index=1, heads=2, num_dimensions=2, sum_axial_out = True)
                 self.body.add_module('attn%d'%(i+1),attn)
         self.tail = nn.Sequential(
             nn.Conv2d(max(N,opt.min_nfc),opt.nc_im,kernel_size=opt.ker_size,stride =1,padding=opt.padd_size),
